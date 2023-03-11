@@ -10,8 +10,10 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var showingScore = false
+    @State private var showingNewGame = false
     @State private var scoreTitle = ""
     @State private var score = 0
+    @State private var questionsAsked = 1
     
     @State private var countries = [
     "Estonia",
@@ -35,10 +37,6 @@ struct ContentView: View {
                 .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
                 .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3)
             ], center: .top, startRadius: 200, endRadius: 700)
-            //            LinearGradient(
-            //                gradient: Gradient(colors: [.blue, .black]),
-            //                startPoint: .top,
-            //                endPoint: .bottom)
             .ignoresSafeArea()
             VStack {
                 Spacer()
@@ -81,6 +79,11 @@ struct ContentView: View {
         } message: {
             Text("Your score is \(score)")
         }
+        .alert("Final Score", isPresented: $showingNewGame) {
+            Button("New Game", action: newGame)
+        } message: {
+            Text("Your final score is \(score)")
+        }
     }
     
     private func flagTapped(_ number: Int) {
@@ -88,16 +91,26 @@ struct ContentView: View {
             scoreTitle = "Correct"
             score += 1
         } else {
-            scoreTitle = "Wrong"
-            score -= 1
+            scoreTitle = "Wrong, that is the flag of \(countries[number])"
         }
         
-        showingScore = true
+        if questionsAsked == 8 {
+            showingNewGame = true
+        } else {
+            showingScore = true
+        }
     }
     
     private func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        questionsAsked += 1
+    }
+    
+    private func newGame() {
+        questionsAsked = 0
+        score = 0
+        askQuestion()
     }
 }
 
