@@ -57,6 +57,7 @@ struct ContentView: View {
     @State private var animateAnswerCorrectness = false
     @State private var state: GameState = .questionAsked
     
+    private var pendingAnswerColor = Color(red: 226 / 255, green: 135 / 255, blue: 67 / 255)
     private var correctAnswerColor = Color(red: 0.3, green: 0.7, blue: 0.26)
     private var wrongAnswerColor = Color(red: 0.76, green: 0.15, blue: 0.26)
     private var askingQuestionColor = Color(red: 0.1, green: 0.2, blue: 0.45)
@@ -141,7 +142,7 @@ struct ContentView: View {
     
     private func gradientColor() -> Color {
         let answerColor = selectedAnswer == correctAnswer ? correctAnswerColor : wrongAnswerColor
-        return state == .questionAsked ? askingQuestionColor : answerColor
+        return state == .questionAsked ? pendingAnswerColor : answerColor
     }
     
     private func evaluateAnswer(_ number: Int) {
