@@ -134,7 +134,7 @@ struct ContentView: View {
     }
     
     private func scaleEffectAmount(_ number: Int) -> CGSize {
-        let answerSize = number == correctAnswer ? 1.0 : 0.8
+        let answerSize = number == selectedAnswer ? 1.0 : 0.8
         let result = state == .answerRevealed ? answerSize : 1.0
         return CGSize(width: result, height: result)
     }
