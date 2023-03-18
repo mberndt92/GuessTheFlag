@@ -89,7 +89,7 @@ struct ContentView: View {
                             withAnimation {
                                 selectedAnswer = number
                                 animationAmount += 360
-                                opacityNonSelected = 0.2
+                                opacityNonSelected = 0.25
                                 flagTapped(number)
                             }
                         } label: {
