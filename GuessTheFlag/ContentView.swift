@@ -61,6 +61,8 @@ struct ContentView: View {
     private var wrongAnswerColor = Color(red: 0.76, green: 0.15, blue: 0.26)
     private var askingQuestionColor = Color(red: 0.1, green: 0.2, blue: 0.45)
     
+    @State private var scaleAmount = 1.0
+    
     var body: some View {
         ZStack {
             RadialGradient(stops: [
@@ -91,6 +93,7 @@ struct ContentView: View {
                             }
                         } label: {
                             FlagView(imageName: countries[number])
+                                .scaleEffect(scaleEffectAmount(number))
                         }
                         .rotation3DEffect(
                             .degrees(state == .answerRevealed && number == selectedAnswer ?  animationAmount : 0), axis: (x: 0, y: 1, z: 0))
@@ -128,6 +131,12 @@ struct ContentView: View {
             print("gameOver")
             showingNewGame = true
         }
+    }
+    
+    private func scaleEffectAmount(_ number: Int) -> CGSize {
+        let answerSize = number == correctAnswer ? 1.0 : 0.8
+        let result = state == .answerRevealed ? answerSize : 1.0
+        return CGSize(width: result, height: result)
     }
     
     private func gradientColor() -> Color {
